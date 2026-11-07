@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCOTT - Diagnóstico 360º de Maturidade Digital</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0f7ff',
+                            100: '#e0effe',
+                            500: '#0284c7',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Modern Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        /* Print Specific Styling */
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+            .print-only {
+                display: block !important;
+            }
+            body {
+                background: white !important;
+                color: black !important;
+                font-size: 12pt;
+            }
+            .page-break {
+                page-break-before: always;
+            }
+            .card-shadow {
+                box-shadow: none !important;
+                border: 1px solid #e2e8f0 !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col font-sans antialiased selection:bg-cyan-500 selection:text-white">
+
+    <!-- TOP BAR DE NAVEGAÇÃO / HEADER -->
+    <header class="border-b border-slate-800 bg-slate-950/80 backdrop-blur-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center text-white font-extrabold text-xl shadow-lg shadow-cyan-500/20">
+                    S
+                </div>
+                <div>
+                    <span class="text-xl font-bold tracking-tight bg-gradient-to-r from-white via-slate-200 to-cyan-400 bg-clip-text text-transparent">
+                        SCOTT <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/30">v3.5 Enterprise</span>
+                    </span>
+                    <p class="text-xs text-slate-400 hidden sm:block">Consultoria Especializada & Diagnóstico 360º de Maturidade Digital</p>
+                </div>
+            </div>
+
+            <div class="flex items-center space-x-3 no-print">
+                <button type="button" onclick="loadDemoData()" class="px-3.5 py-2 text-xs font-semibold rounded-lg bg-slate-800 hover:bg-slate-700 text-cyan-400 border border-slate-700 transition-all flex items-center gap-2 shadow-sm">
+                    <i class="fa-solid fa-wand-magic-sparkles">font-awesome</i>
+                    <span>Caso Exemplo (Demo)</span>
+                </button>
+                <button type="button" onclick="resetForm()" class="px-3 py-2 text-xs font-medium rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-all">
+                    <i class="fa-solid fa-rotate-left"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- CONTAINER PRINCIPAL -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10">
+
+        <!-- INTRODUÇÃO E VISÃO GERAL DOS 4 PILARES -->
+        <section class="no-print bg-gradient-to-b from-slate-800/60 to-slate-900/60 border border-slate-800 rounded-2xl p-6 sm:p-8 backdrop-blur-sm relative overflow-hidden">
+            <div class="absolute -right-20 -top-20 w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="max-w-3xl">
+                <h1 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight mb-3">
+                    Avaliação Estratégica de Prontidão Tecnológica
+                </h1>
+                <p class="text-slate-300 text-sm sm:text-base leading-relaxed mb-6">
+                    Mapeie gargalos de infraestrutura, lacunas de integração em ERP/CRM, potencial não explorado de IA e riscos de segurança e conformidade LGPD. Obtenha um laudo executivo completo em menos de 3 minutos.
+                </p>
+            </div>
+
+            <!-- GRID DOS 4 PILARES DE AVALIAÇÃO -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-6 border-t border-slate-800/80 pt-6">
+                <div class="p-4 rounded-xl bg-slate-950/40 border border-slate-800 flex items-start space-x-3">
+                    <div class="p-2.5 rounded-lg bg-blue-500/10 text-blue-400 mt-0.5">
+                        <i class="fa-solid fa-cloud text-lg"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-xs font-bold uppercase tracking-wider text-slate-300">Pilar 1</h4>
+                        <p class="text-sm font-semibold text-white">Nuvem & Infraestrutura</p>
+                        <p class="text-xs text-slate-400 mt-1">IaaS/PaaS, SLA e Backup 3-2-1</p>
+                    </div>
+                </div>
+
+                <div class="p-4 rounded-xl bg-slate-950/40 border border-slate-800 flex items-start space-x-3">
+                    <div class="p-2.5 rounded-lg bg-emerald-500/10 text-emerald-400 mt-0.5">
+                        <i class="fa-solid fa-network-wired text-lg"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-xs font-bold uppercase tracking-wider text-slate-300">Pilar 2</h4>
+                        <p class="text-sm font-semibold text-white">Sistemas & Dados</p>
+                        <p class="text-xs text-slate-400 mt-1">Integração ERP/CRM e Fim de Silos</p>
+                    </div>
+                </div>
+
+                <div class="p-4 rounded-xl bg-slate-950/40 border border-slate-800 flex items-start space-x-3">
+                    <div class="p-2.5 rounded-lg bg-purple-500/10 text-purple-400 mt-0.5">
+                        <i class="fa-solid fa-robot text-lg"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-xs font-bold uppercase tracking-wider text-slate-300">Pilar 3</h4>
+                        <p class="text-sm font-semibold text-white">IA Generativa & Automação</p>
+                        <p class="text-xs text-slate-400 mt-1">No-Code, Agentes e Produtividade</p>
+                    </div>
+                </div>
+
+                <div class="p-4 rounded-xl bg-slate-950/40 border border-slate-800 flex items-start space-x-3">
+                    <div class="p-2.5 rounded-lg bg-amber-500/10 text-amber-400 mt-0.5">
+                        <i class="fa-solid fa-shield-halved text-lg"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-xs font-bold uppercase tracking-wider text-slate-300">Pilar 4</h4>
+                        <p class="text-sm font-semibold text-white">Governança & Segurança</p>
+                        <p class="text-xs text-slate-400 mt-1">LGPD, MFA e Políticas de Acesso</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FORMULÁRIO DE DIAGNÓSTICO -->
+        <form id="diagnosticForm" onsubmit="event.preventDefault(); calculateDiagnostic();" class="space-y-8 no-print">
+
+            <!-- METADADOS DA EMPRESA -->
+            <div class="bg-slate-800/40 border border-slate-800 rounded-2xl p-6 sm:p-8 space-y-6">
+                <div class="flex items-center space-x-3 border-b border-slate-800 pb-4">
+                    <div class="w-8 h-8 rounded-lg bg-cyan-500/10 flex items-center justify-center text-cyan-400">
+                        <i class="fa-solid fa-building"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-lg font-bold text-white">Identificação Organizacional</h2>
+                        <p class="text-xs text-slate-400">Preencha os dados básicos para a personalização do relatório</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">Nome da Empresa *</label>
+                        <input type="text" id="companyName" required placeholder="Ex: TechCorp Soluções" 
+                            class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">Setor de Atuação *</label>
+                        <select id="companySector" required class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all">
+                            <option value="">Selecione o setor...</option>
+                            <option value="Tecnologia e Software">Tecnologia & Software</option>
+                            <option value="Varejo e E-Commerce">Varejo & E-Commerce</option>
+                            <option value="Indústria e Manufatura">Indústria & Manufatura</option>
+                            <option value="Serviços Financeiros">Serviços Financeiros & Fintech</option>
+                            <option value="Saúde e Pharma">Saúde & Pharma</option>
+                            <option value="Logística e Transporte">Logística & Transporte</option>
+                            <option value="Outros">Outros Setores</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">Porte da Empresa *</label>
+                        <select id="companySize" required class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all">
+                            <option value="">Selecione o porte...</option>
+                            <option value="Startup / Micro (até 19 func.)">Startup / Micro (até 19 funcionários)</option>
+                            <option value="Pequena (20 a 99 func.)">Pequena Empresa (20 a 99 funcionários)</option>
+                            <option value="Média (100 a 499 func.)">Média Empresa (100 a 499 funcionários)</option>
+                            <option value="Grande (500+ func.)">Corporativo / Grande Porte (500+ funcionários)</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- QUESTIONÁRIO ESTRUTURADO (8 PERGUNTAS) -->
+            <div class="space-y-6">
+
+                <!-- PILAR 1 -->
+                <div class="bg-slate-800/40 border border-slate-800 rounded-2xl p-6 sm:p-8 space-y-6">
+                    <div class="flex items-center space-x-3 border-b border-slate-800 pb-4">
+                        <span class="w-7 h-7 rounded-lg bg-blue-500/20 text-blue-400 flex items-center justify-center text-xs font-bold">P1</span>
+                        <div>
+                            <h3 class="text-base font-bold text-white">Pilar 1: Infraestrutura Digital e Migração para a Nuvem</h3>
+                            <p class="text-xs text-slate-400">Avalia a modernização de servidores, redundancy e planos de continuidade</p>
+                        </div>
+                    </div>
+
+                    <!-- Questão 1.1 -->
+                    <div class="space-y-3">
+                        <label class="block text-sm font-medium text-slate-200">
+                            1. Qual é o modelo predominante de hospedagem da sua infraestrutura principal de TI?
+                        </label>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <label class="relative flex items-center p-3 rounded-xl bg-slate-950/60 border border-slate-800 hover:border-slate-700 cursor-pointer transition-all">
+                                <input type="radio" name="p1_q1" value="0" required class="w-4 h-4 text-cyan-500 bg-slate-900 border-slate-700 focus:ring-cyan-500">
+                                <span class="ml-3 text-xs text-slate-300">100% Servidores Locais (On-Premises) sem redundância remota</span>
+                            </label>
+                            <label class="relative flex items-center p-3 rounded-xl bg-slate-950/60 border border-slate-800 hover:border-slate-700 cursor-pointer transition-all">
+                                <input type="radio" name="p1_q1" value="33" class="w-4 h-4 text-cyan-500 bg-slate-900 border-slate-700 focus:ring-cyan-500">
+                                <span class="ml-3 text-xs text-slate-300">Modelo Híbrido básico (Servidores locais + Nuvem apenas para e-mails/arquivos)</span>
+                            </label>
+                            <label class="relative flex items-center p-3 rounded-xl bg-slate-950/60 border border-slate-800 hover:border-slate-700 cursor-pointer transition-all">
+                                <input type="radio" name="p1_q1" value="66" class="w-4 h-4 text-cyan-500 bg-slate-900 border-slate-700 focus:ring-cyan-500">
+                                <span class="ml-3 text-xs text-slate-300">Maioria dos sistemas em Nuvem (IaaS/PaaS) com migração em andamento</span>
+                            </label>
+                            <label class="relative flex items-center p-3 rounded-xl bg-slate-950/60 border border-slate-800 hover:border-slate-700 cursor-pointer transition-all">
+                                <input type="radio" name="p1_q1" value="100" class="w-4 h-4 text-cyan-500 bg-slate-900 border-slate-700 focus:ring-cyan-500">
+                                <span class="ml-3 text-xs text-slate-300">100% Cloud Native (AWS, Azure, GCP) ou SaaS corporativo de alta disponibilidade</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Questão 1.2 -->
+                    <div class="space-y-3 pt-2">
+                        <label class="block text-sm font-medium text-slate-200">
+                            2. Como é executada a rotina de Backup e Recuperação de Desastres (DRP)?
+                        </label>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <label class="relative flex items-center p-3 rounded-xl bg-slate-950/60 border border-slate-800 hover:border-slate-700 cursor-pointer transition-all">
+                                <input type="radio" name="p1_q2" value="0" required class="w-4 h-4 text-cyan-500 bg-slate-900 border-slate-700 focus:ring-cyan-500">
+                                <span class="ml-3 text-xs text-slate-300">Backups manuais esporádicos ou inexistentes sem testes de restauração</span>
+                            </label>
+                            <label class="relative flex items-center p-3 rounded-xl bg-slate-950/60 border border-slate-800 hover:border-slate-700 cursor-pointer transition-all">
+                                <input type="radio" name="p1_q2" value="33" class="w-4 h-4 text-cyan-500 bg-slate-900 border-slate-700 focus:ring-cyan-500">
+                                <span class="ml-3 text-xs text-slate-300">Backup automático local (HD externo/NAS), sem cópia em local externo</span>
+                            </label>
+                            <label class="relative flex items-center p-3 rounded-xl bg-slate-950/60 border border-slate-800 hover:border-slate-700 cursor-pointer transition-all">
+                                <input type="radio" name="p1_q2" value="66" class="w-4 h-4 text-cyan-500 bg-slate-900 border-slate-700 focus:ring-cyan-500">
+                                <span class="ml-3 text-xs text-slate-300">Backup em Nuvem automatizado diário, porém sem testes periódicos de Restore</span>
+                            </label>
+                            <label class="relative flex items-center p-3 rounded-xl bg-slate-950/60 border border-slate-800 hover:border-slate-700 cursor-pointer transition-all">
+                                <input type="radio" name="p1_q2" value="100" class="w-4 h-4 text-cyan-500 bg-slate-900 border-slate-700 focus:ring-cyan-500">
+                                <span class="ml-3 text-xs text-slate-300">Estratégia 3-2-1 rigorosa (3 cópias, 2 mídias, 1 offsite/cloud) com testes de RTO/RPO</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PILAR 2 -->
+                <div class="bg-slate-800/40 border border-slate-800 rounded-2xl p-6 sm:p-8 space-y-6">
+                    <div class="flex items-center space-x-3 border-b border-slate-800 pb-4">
+                        <span class="w-7 h-7 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-xs font-bold">P2</span>
+                        <div>
+                            <h3 class="text-base font-bold text-white">Pilar 2: Sistemas Empresariais e Fluxo de Dados</h3>
+                            <p class="text-xs text-slate-400">Avalia a maturidade de integração ERP/CRM e mitigação de controles paralelos em planilhas</p>
+                        </div>
+                    </div>
+
+                    <!-- Questão 2.1 -->
+                    <div class="space-y-3">
+                        <label class="block text-sm font-medium text-slate-200">
+                            1. Qual é o nível de centralização dos processos operacionais no ERP e CRM?
+                        </label>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <label class="relative flex items-center p-3 rounded-xl bg-slate-950/60 border border-slate-800 hover:border-slate-700 cursor-pointer transition-all">
+                                <input type="radio" name="p2_q1" value="0" required class="w-4 h-4 text-cyan-500 bg-slate-900 border-slate-700 focus:ring-cyan-500">
+                                <span class="ml-3 text-xs text-slate-300">Não há ERP/CRM centralizado; operação mantida em planilhas isoladas</span>
+                            </label>
+                            <label class="relative flex items-center p-3 rounded-xl bg-slate-950/60 border border-slate-800 hover:border-slate-700 cursor-pointer transition-all">
+                                <input type="radio" name="p2_q1" value="33" class="w-4 h-4 text-cyan-500 bg-slate-900 border-slate-700 focus:ring-cyan-500">
+                                <span class="ml-3 text-xs text-slate-300">ERP ou CRM implantados de forma parcial, demandando retrabalho manual constante</span>
+                            </label>
+                            <label class="relative flex items-center p-3 rounded-xl bg-slate-950/60 border border-slate-800 hover:border-slate-700 cursor-pointer transition-all">
+                                <input type="radio" name="p2_q1" value="66" class="w-4 h-4 text-cyan-500 bg-slate-900 border-slate-700 focus:ring-cyan-500">
+                                <span class="ml-3 text-xs text-slate-300">Sistemas robustos ativos, porém com módulos rodando sem comunicação direta</span>
+                            </label>
+                            <label class="relative flex items-center p-3 rounded-xl bg-slate-950/60 border border-slate-800 hover:border-slate-700 cursor-pointer transition-all">
+                                <input type="radio" name="p2_q1" value="100" class="w-4 h-4 text-cyan-500 bg-slate-900 border-slate-700 focus:ring-cyan-500">
+                                <span class="ml-3 text-xs text-slate-300">ERP e CRM 100% integrados, servindo como única fonte de verdade (Single Source of Truth)</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Questão 2.2 -->
+                    <div class="space-y-3 pt-2">
+                        <label class="block text-sm font-medium text-slate-200">
+                            2. Como ocorre o fluxo de dados e relatórios entre os diferentes setores da empresa?
+                        </label>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <label class="relative flex items-center p-3 rounded-xl bg-slate-950/60 border border-slate-800 hover:border-slate-700 cursor-pointer transition-all">
+                                <input type="radio" name="p2_q2" value="0" required class="w-4 h-4 text-cyan-500 bg-slate-900 border-slate-700 focus:ring-cyan-500">
+                                <span class="ml-3 text-xs text-slate-300">Troca de planilhas via e-mail ou WhatsApp com versões inconsistentes e divergentes</span>
+                            </label>
+                            <label class="relative flex items-center p-3 rounded-xl bg-slate-950/60 border border-slate-800 hover:border-slate-700 cursor-pointer transition-all">
+                                <input type="radio" name="p2_q2" value="33" class="w-4 h-4 text-cyan-500 bg-slate-900 border-slate-700 focus:ring-cyan-500">
+                                <span class="ml-3 text-xs text-slate-300">Exportação periódica de relatórios em CSV/Excel consolidados manualmente</span>
+                            </label>
+                            <label class="relative flex items-center p-3 rounded-xl bg-slate-950/60 border border-slate-800 hover:border-slate-700 cursor-pointer transition-all">
+                                <input type="radio" name="p2_q2" value="66" class="w-4 h-4 text-cyan-500 bg-slate-900 border-slate-700 focus:ring-cyan-500">
+                                <span class="ml-3 text-xs text-slate-300">Integrações via APIs simples ou conectores entre alguns sistemas principais</span>
+                            </label>
+                            <label class="relative flex items-center p-3 rounded-xl bg-slate-950/60 border border-slate-800 hover:border-slate-700 cursor-pointer transition-all">
+                                <input type="radio" name="p2_q2" value="100" class="w-4 h-4 text-cyan-500 bg-slate-900 border-slate-700 focus:ring-cyan-500">
+                                <span class="ml-3 text-xs text-slate-300">Pipelines de dados automatizados, conectores webhooks e Dashboards de BI em tempo real</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PILAR 3 -->
+                <div class="bg-slate-800/40 border border-slate-800 rounded-2xl p-6 sm:p-8 space-y-6">
+                    <div class="flex items-center space-x-3 border-b border-slate-800 pb-4">
+                        <span class="w-7 h-7 rounded-lg bg-purple-500/20 text-purple-400 flex items-center justify-center text-xs font-bold">P3</span>
+                        <div>
+                            <h3 class="text-base font-bold text-white">Pilar 3: Inteligência Artificial Generativa e Automação No-Code</h3>
+                            <p class="text-xs text-slate-400">Avalia o nível de otimização de tempo e substituição de tarefas repetitivas por IA</p>
+                        </div>
+                    </div>
+
+                    <!-- Questão 3.1 -->
+                    <div class="space-y-3">
+                        <label class="block text-sm font-medium text-slate-200">
+                            1. De que maneira ferramentas de Inteligência Artificial (ex: LLMs, Copilots) são aplicadas no dia a dia?
+                        </label>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <label class="relative flex items-center p-3 rounded-xl bg-slate-950/60 border border-slate-800 hover:border-slate-700 cursor-pointer transition-all">
+                                <input type="radio" name="p3_q1" value="0" required class="w-4 h-4 text-cyan-500 bg-slate-900 border-slate-700 focus:ring-cyan-500">
+                                <span class="ml-3 text-xs text-slate-300">Sem uso de IA corporativa ou adoção explicitamente proibida/desconhecida</span>
+                            </label>
+                            <label class="relative flex items-center p-3 rounded-xl bg-slate-950/60 border border-slate-800 hover:border-slate-700 cursor-pointer transition-all">
+                                <input type="radio" name="p3_q1" value="33" class="w-4 h-4 text-cyan-500 bg-slate-900 border-slate-700 focus:ring-cyan-500">
+                                <span class="ml-3 text-xs text-slate-300">Uso informal por colaboradores individuais (contas pessoais do ChatGPT/Claude)</span>
+                            </label>
+                            <label class="relative flex items-center p-3 rounded-xl bg-slate-950/60 border border-slate-800 hover:border-slate-700 cursor-pointer transition-all">
+                                <input type="radio" name="p3_q1" value="66" class="w-4 h-4 text-cyan-500 bg-slate-900 border-slate-700 focus:ring-cyan-500">
+                                <span class="ml-3 text-xs text-slate-300">Licenciamento corporativo de IA implementado para equipes de escrita, atendimento ou dev</span>
+                            </label>
+                            <label class="relative flex items-center p-3 rounded-xl bg-slate-950/60 border border-slate-800 hover:border-slate-700 cursor-pointer transition-all">
+                                <input type="radio" name="p3_q1" value="100" class="w-4 h-4 text-cyan-500 bg-slate-900 border-slate-700 focus:ring-cyan-500">
+                                <span class="ml-3 text-xs text-slate-300">Agentes de IA e RAG conectados às bases de conhecimento internas e APIs de negócio</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Questão 3.2 -->
+                    <div class="space-y-3 pt-2">
+                        <label class="block text-sm font-medium text-slate-200">
+                            2. Qual é a maturidade na adoção de Automações No-Code / Low-Code (ex: Make, N8N, Power Automate)?
+                        </label>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <label class="relative flex items-center p-3 rounded-xl bg-slate-950/60 border border-slate-800 hover:border-slate-700 cursor-pointer transition-all">
+                                <input type="radio" name="p3_q2" value="0" required class="w-4 h-4 text-cyan-500 bg-slate-900 border-slate-700 focus:ring-cyan-500">
+                                <span class="ml-3 text-xs text-slate-300">Todas as rotinas operacionais executadas 100% manualmente por colaboradores</span>
+                            </label>
+                            <label class="relative flex items-center p-3 rounded-xl bg-slate-950/60 border border-slate-800 hover:border-slate-700 cursor-pointer transition-all">
+                                <input type="radio" name="p3_q2" value="33" class="w-4 h-4 text-cyan-500 bg-slate-900 border-slate-700 focus:ring-cyan-500">
+                                <span class="ml-3 text-xs text-slate-300">Automações pontuais isoladas (ex: regras de e-mail ou respostas automáticas de chat)</span>
+                            </label>
+                            <label class="relative flex items-center p-3 rounded-xl bg-slate-950/60 border border-slate-800 hover:border-slate-700 cursor-pointer transition-all">
+                                <input type="radio" name="p3_q2" value="66" class="w-4 h-4 text-cyan-500 bg-slate-900 border-slate-700 focus:ring-cyan-500">
+                                <span class="ml-3 text-xs text-slate-300">Fluxos No-Code integrando CRM, ERP e Comunicação (ex: notificação automática de vendas)</span>
+                            </label>
+                            <label class="relative flex items-center p-3 rounded-xl bg-slate-950/60 border border-slate-800 hover:border-slate-700 cursor-pointer transition-all">
+                                <input type="radio" name="p3_q2" value="100" class="w-4 h-4 text-cyan-500 bg-slate-900 border-slate-700 focus:ring-cyan-500">
+                                <span class="ml-3 text-xs text-slate-300">Ecossistema automatizado end-to-end com tratamento de exceções e orquestração avançada</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PILAR 4 -->
+                <div class="bg-slate-800/40 border border-slate-800 rounded-2xl p-6 sm:p-8 space-y-6">
+                    <div class="flex items-center space-x-3 border-b border-slate-800 pb-4">
+                        <span class="w-7 h-7 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center text-xs font-bold">P4</span>
+                        <div>
+                            <h3 class="text-base font-bold text-white">Pilar 4: Governança, Ética e Segurança da Informação</h3>
+                            <p class="text-xs text-slate-400">Avalia conformidade LGPD, controle de acessos (MFA) e políticas de segurança</p>
+                        </div>
+                    </div>
+
+                    <!-- Questão 4.1 -->
+                    <div class="space-y-3">
+                        <label class="block text-sm font-medium text-slate-200">
+                            1. Qual o nível de implementação de autenticação segura e gestão de identidades (IAM)?
+                        </label>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <label class="relative flex items-center p-3 rounded-xl bg-slate-950/60 border border-slate-800 hover:border-slate-700 cursor-pointer transition-all">
+                                <input type="radio" name="p4_q1" value="0" required class="w-4 h-4 text-cyan-500 bg-slate-900 border-slate-700 focus:ring-cyan-500">
+                                <span class="ml-3 text-xs text-slate-300">Senhas simples e compartilhadas entre usuários; sem Autenticação de Dois Fatores (MFA)</span>
+                            </label>
+                            <label class="relative flex items-center p-3 rounded-xl bg-slate-950/60 border border-slate-800 hover:border-slate-700 cursor-pointer transition-all">
+                                <input type="radio" name="p4_q1" value="33" class="w-4 h-4 text-cyan-500 bg-slate-900 border-slate-700 focus:ring-cyan-500">
+                                <span class="ml-3 text-xs text-slate-300">MFA ativado apenas nos e-mails principais, mas sem controle rígido de revogação</span>
+                            </label>
+                            <label class="relative flex items-center p-3 rounded-xl bg-slate-950/60 border border-slate-800 hover:border-slate-700 cursor-pointer transition-all">
+                                <input type="radio" name="p4_q1" value="66" class="w-4 h-4 text-cyan-500 bg-slate-900 border-slate-700 focus:ring-cyan-500">
+                                <span class="ml-3 text-xs text-slate-300">MFA obrigatório em todas as contas e controle de acessos baseado em função (RBAC)</span>
+                            </label>
+                            <label class="relative flex items-center p-3 rounded-xl bg-slate-950/60 border border-slate-800 hover:border-slate-700 cursor-pointer transition-all">
+                                <input type="radio" name="p4_q1" value="100" class="w-4 h-4 text-cyan-500 bg-slate-900 border-slate-700 focus:ring-cyan-500">
+                                <span class="ml-3 text-xs text-slate-300">Arquitetura Zero-Trust, SSO (Single Sign-On), MFA universal e auditoria de acessos</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Questão 4.2 -->
+                    <div class="space-y-3 pt-2">
+                        <label class="block text-sm font-medium text-slate-200">
+                            2. Qual é a situação de conformidade da empresa em relação à LGPD e uso ético de dados/IA?
+                        </label>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <label class="relative flex items-center p-3 rounded-xl bg-slate-950/60 border border-slate-800 hover:border-slate-700 cursor-pointer transition-all">
+                                <input type="radio" name="p4_q2" value="0" required class="w-4 h-4 text-cyan-500 bg-slate-900 border-slate-700 focus:ring-cyan-500">
+                                <span class="ml-3 text-xs text-slate-300">Nenhum projeto de adequação à LGPD realizado; ausência de políticas formais</span>
+                            </label>
+                            <label class="relative flex items-center p-3 rounded-xl bg-slate-950/60 border border-slate-800 hover:border-slate-700 cursor-pointer transition-all">
+                                <input type="radio" name="p4_q2" value="33" class="w-4 h-4 text-cyan-500 bg-slate-900 border-slate-700 focus:ring-cyan-500">
+                                <span class="ml-3 text-xs text-slate-300">Apenas termos de privacidade no site, sem mapeamento interno de dados (ROPA)</span>
+                            </label>
+                            <label class="relative flex items-center p-3 rounded-xl bg-slate-950/60 border border-slate-800 hover:border-slate-700 cursor-pointer transition-all">
+                                <input type="radio" name="p4_q2" value="66" class="w-4 h-4 text-cyan-500 bg-slate-900 border-slate-700 focus:ring-cyan-500">
+                                <span class="ml-3 text-xs text-slate-300">Adequação LGPD estruturada, DPO/Encarregado nomeado e canal de titulares ativo</span>
+                            </label>
+                            <label class="relative flex items-center p-3 rounded-xl bg-slate-950/60 border border-slate-800 hover:border-slate-700 cursor-pointer transition-all">
+                                <input type="radio" name="p4_q2" value="100" class="w-4 h-4 text-cyan-500 bg-slate-900 border-slate-700 focus:ring-cyan-500">
+                                <span class="ml-3 text-xs text-slate-300">Governança contínua, auditorias periódicas e diretrizes éticas claras para IA corporativa</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- BOTÃO DE AÇÃO -->
+            <div class="flex justify-end pt-4">
+                <button type="submit" class="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold rounded-xl shadow-lg shadow-cyan-500/25 transition-all flex items-center justify-center gap-3 text-base">
+                    <i class="fa-solid fa-chart-pie"></i>
+                    <span>Gerar Diagnóstico 360º & Laudo Técnico</span>
+                </button>
+            </div>
+        </form>
+
+        <!-- DASHBOARD DE RESULTADOS (INICIALMENTE OCULTO) -->
+        <section id="resultsDashboard" class="hidden space-y-10">
+
+            <!-- CABEÇALHO DO LAUDO (ESTILO CONSULTORIA) -->
+            <div class="bg-slate-800/60 border border-slate-700 rounded-2xl p-6 sm:p-8 card-shadow">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-slate-700 pb-6 gap-4">
+                    <div>
+                        <div class="flex items-center gap-2 text-cyan-400 text-xs font-bold uppercase tracking-wider mb-1">
+                            <i class="fa-solid fa-file-contract"></i> Laudo Técnico de Prontidão Digital
+                        </div>
+                        <h2 id="resCompanyName" class="text-2xl sm:text-3xl font-extrabold text-white"></h2>
+                        <div class="flex flex-wrap gap-4 text-xs text-slate-400 mt-2">
+                            <span><strong class="text-slate-300">Setor:</strong> <span id="resCompanySector"></span></span>
+                            <span>•</span>
+                            <span><strong class="text-slate-300">Porte:</strong> <span id="resCompanySize"></span></span>
+                            <span>•</span>
+                            <span><strong class="text-slate-300">Data de Emissão:</strong> <span id="resDate"></span></span>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-3 no-print">
+                        <button onclick="window.print()" class="px-4 py-2.5 bg-slate-700 hover:bg-slate-600 text-white text-xs font-semibold rounded-xl transition-all flex items-center gap-2">
+                            <i class="fa-solid fa-print"></i>
+                            <span>Imprimir / PDF</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- SCORE GERAL E SELO -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6 items-center">
+                    <!-- SCORE -->
+                    <div class="bg-slate-950/60 rounded-xl p-6 border border-slate-800 text-center flex flex-col justify-center items-center">
+                        <span class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Índice Geral de Maturidade Digital (IMD)</span>
+                        <div class="relative flex items-center justify-center">
+                            <span id="overallScoreText" class="text-5xl font-extrabold text-white">0%</span>
+                        </div>
+                        <div class="w-full bg-slate-800 rounded-full h-3 mt-4 overflow-hidden">
+                            <div id="overallScoreBar" class="bg-gradient-to-r from-cyan-500 to-blue-600 h-full transition-all duration-1000" style="width: 0%"></div>
+                        </div>
+                    </div>
+
+                    <!-- CLASSIFICAÇÃO / BADGE -->
+                    <div class="bg-slate-950/60 rounded-xl p-6 border border-slate-800 flex flex-col justify-center items-center text-center">
+                        <span class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Estágio de Transformação</span>
+                        <div id="maturityBadge" class="px-4 py-2 rounded-full font-bold text-sm border flex items-center gap-2">
+                            <!-- Inserido dinamicamente via JS -->
+                        </div>
+                        <p id="maturityDescription" class="text-xs text-slate-400 mt-3 leading-relaxed">
+                            <!-- Inserido dinamicamente -->
+                        </p>
+                    </div>
+
+                    <!-- RESUMO RÁPIDO -->
+                    <div class="bg-slate-950/60 rounded-xl p-6 border border-slate-800 space-y-3">
+                        <span class="text-xs font-bold uppercase tracking-wider text-slate-400 block mb-1">Resumo Executivo</span>
+                        <div class="flex items-center justify-between text-xs border-b border-slate-800 pb-2">
+                            <span class="text-slate-400">Pilar Mais Forte:</span>
+                            <span id="strongestPillar" class="font-semibold text-emerald-400">-</span>
+                        </div>
+                        <div class="flex items-center justify-between text-xs border-b border-slate-800 pb-2">
+                            <span class="text-slate-400">Gargalo Crítico:</span>
+                            <span id="weakestPillar" class="font-semibold text-rose-400">-</span>
+                        </div>
+                        <div class="flex items-center justify-between text-xs">
+                            <span class="text-slate-400">Prioridade Imediata:</span>
+                            <span id="topPriority" class="font-semibold text-cyan-400">-</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CARDS DE PILARES E GRÁFICO RADAR -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
+                <!-- CARDS DETALHADOS DOS 4 PILARES -->
+                <div class="space-y-4">
+                    <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                        <i class="fa-solid fa-layer-group text-cyan-400"></i> Desempenho Por Pilar
+                    </h3>
+
+                    <!-- Pilar 1 Card -->
+                    <div class="bg-slate-800/40 border border-slate-800 rounded-xl p-4 flex items-center justify-between">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 rounded-lg bg-blue-500/10 text-blue-400 flex items-center justify-center font-bold">
+                                <i class="fa-solid fa-cloud"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-semibold text-white">Nuvem & Infraestrutura</h4>
+                                <div class="w-32 bg-slate-900 rounded-full h-1.5 mt-2">
+                                    <div id="p1Bar" class="bg-blue-500 h-full rounded-full" style="width: 0%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <span id="p1Score" class="text-lg font-bold text-white">0%</span>
+                    </div>
+
+                    <!-- Pilar 2 Card -->
+                    <div class="bg-slate-800/40 border border-slate-800 rounded-xl p-4 flex items-center justify-between">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center font-bold">
+                                <i class="fa-solid fa-network-wired"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-semibold text-white">Sistemas ERP/CRM & Dados</h4>
+                                <div class="w-32 bg-slate-900 rounded-full h-1.5 mt-2">
+                                    <div id="p2Bar" class="bg-emerald-500 h-full rounded-full" style="width: 0%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <span id="p2Score" class="text-lg font-bold text-white">0%</span>
+                    </div>
+
+                    <!-- Pilar 3 Card -->
+                    <div class="bg-slate-800/40 border border-slate-800 rounded-xl p-4 flex items-center justify-between">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 rounded-lg bg-purple-500/10 text-purple-400 flex items-center justify-center font-bold">
+                                <i class="fa-solid fa-robot"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-semibold text-white">IA Generativa & Automação</h4>
+                                <div class="w-32 bg-slate-900 rounded-full h-1.5 mt-2">
+                                    <div id="p3Bar" class="bg-purple-500 h-full rounded-full" style="width: 0%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <span id="p3Score" class="text-lg font-bold text-white">0%</span>
+                    </div>
+
+                    <!-- Pilar 4 Card -->
+                    <div class="bg-slate-800/40 border border-slate-800 rounded-xl p-4 flex items-center justify-between">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 rounded-lg bg-amber-500/10 text-amber-400 flex items-center justify-center font-bold">
+                                <i class="fa-solid fa-shield-halved"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-semibold text-white">Governança & Segurança</h4>
+                                <div class="w-32 bg-slate-900 rounded-full h-1.5 mt-2">
+                                    <div id="p4Bar" class="bg-amber-500 h-full rounded-full" style="width: 0%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <span id="p4Score" class="text-lg font-bold text-white">0%</span>
+                    </div>
+                </div>
+
+                <!-- GRÁFICO RADAR -->
+                <div class="bg-slate-800/40 border border-slate-800 rounded-2xl p-6 flex flex-col justify-center items-center">
+                    <h3 class="text-sm font-bold text-slate-300 uppercase tracking-wider mb-4 w-full text-left">
+                        <i class="fa-solid fa-chart-radar text-cyan-400 mr-2"></i> Matriz de Equilíbrio Tecnológico
+                    </h3>
+                    <div class="relative w-full max-w-sm aspect-square flex items-center justify-center">
+                        <canvas id="radarChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PLANO DE BOAS PRÁTICAS DO ESPECIALISTA (DINÂMICO) -->
+            <div class="space-y-6 pt-4">
+                <div class="border-b border-slate-800 pb-4">
+                    <h3 class="text-xl font-extrabold text-white flex items-center gap-2">
+                        <i class="fa-solid fa-list-check text-cyan-400"></i> Plano de Boas Práticas Priorizado
+                    </h3>
+                    <p class="text-xs text-slate-400 mt-1">Recomendações técnicas customizadas com base no nível atual de maturidade da empresa</p>
+                </div>
+
+                <div id="recommendationsContainer" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Gerado via JavaScript dinamicamente -->
+                </div>
+            </div>
+
+            <!-- BOTÃO REFAZER DIAGNÓSTICO -->
+            <div class="flex justify-center pt-8 no-print">
+                <button onclick="resetForm()" class="px-6 py-3 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 text-xs font-semibold rounded-xl transition-all flex items-center gap-2">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    <span>Realizar Novo Diagnóstico</span>
+                </button>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- RODAPÉ EXECUTIVO -->
+    <footer class="border-t border-slate-800 bg-slate-950/80 py-8 text-xs text-slate-400 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
+            <div class="space-y-1">
+                <div class="flex items-center justify-center md:justify-start gap-2 text-slate-300 font-semibold">
+                    <i class="fa-solid fa-user-shield text-cyan-400"></i>
+                    <span>Privacy by Design (LGPD Compliance)</span>
+                </div>
+                <p class="text-slate-400 text-[11px]">Todos os cálculos e relatórios são processados localmente no navegador. Nenhum dado corporativo é transmitido a servidores externos.</p>
+            </div>
+
+            <div class="text-[11px] text-slate-400">
+                <p>SCOTT Enterprise Digital Maturity Framework © 2026</p>
+                <p class="mt-0.5">Arquitetura de Sistemas & Consultoria Executiva em TI</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- LÓGICA JAVASCRIPT VANILLA -->
+    <script>
+        let radarChartInstance = null;
+
+        // Base de Recomendações Técnicas Especializadas
+        const recommendationsDB = {
+            p1: {
+                title: "Infraestrutura & Nuvem",
+                icon: "fa-cloud",
+                color: "blue",
+                low: [
+                    "<strong>Migração Gradual (Lift-and-Shift):</strong> Iniciar a transição de servidores físicos críticos para IaaS (ex: AWS EC2 ou Azure VMs) reduzindo custos com hardware.",
+                    "<strong>Plano de Backup 3-2-1:</strong> Implementar urgentemente a regra de backup (3 cópias, 2 mídias diferentes, 1 em nuvem) com criptografia de ponta a ponta.",
+                    "<strong>Monitoramento Básico:</strong> Implantar ferramentas de monitoramento de disponibilidade (ex: Zabbix ou Datadog) com alertas em tempo real."
+                ],
+                medium: [
+                    "<strong>Otimização FinOps:</strong> Revisar custos de nuvem atual implementando instâncias reservadas ou auto-scaling para economizar até 30%.",
+                    "<strong>Disaster Recovery Plan (DRP):</strong> Formalizar e testar semestralmente os planos de RTO (tempo de recuperação) e RPO (perda máxima aceitável de dados).",
+                    "<strong>Modernização para PaaS:</strong> Migrar bancos de dados relacionais locais para serviços gerenciados (ex: AWS RDS ou Azure SQL)."
+                ],
+                high: [
+                    "<strong>Arquitetura Multi-Cloud / Cloud Native:</strong> Adotar contêineres (Kubernetes/Docker) e infraestrutura como código (Terraform) para alta resiliência.",
+                    "<strong>Automação de FinOps & AI Ops:</strong> Utilizar inteligência artificial para previsão de consumo de infraestrutura e correção remota de falhas.",
+                    "<strong>Testes de Caos & Alta Disponibilidade (Multi-Region):</strong> Implementar replicação ativa-ativa em regiões geográficas distintas."
+                ]
+            },
+            p2: {
+                title: "Sistemas ERP/CRM & Dados",
+                icon: "fa-network-wired",
+                color: "emerald",
+                low: [
+                    "<strong>Fim do Silo de Planilhas:</strong> Mapear planilhas críticas utilizadas na operação e planejar a migração de dados para um ERP/CRM centralizado.",
+                    "<strong>Padronização de Cadastros:</strong> Estabelecer governança de dados para limpeza de duplicidades em cadastros de clientes e produtos.",
+                    "<strong>Adoção de CRM em Nuvem:</strong> Implantar CRM acessível via web/mobile para consolidar o funil de vendas em tempo real."
+                ],
+                medium: [
+                    "<strong>Integração via APIs / Webhooks:</strong> Conectar o ERP e o CRM via APIs RESTful para eliminar a digitação dupla de pedidos e notas.",
+                    "<strong>Self-Service BI:</strong> Estruturar um Data Warehouse e criar painéis executivos no Power BI ou Looker Studio com atualização diária.",
+                    "<strong>Automação de Contratos e Cobrança:</strong> Integrar o gateway de pagamento e a emissão de NF-e ao fluxo do ERP."
+                ],
+                high: [
+                    "<strong>Arquitetura de Dados Event-Driven:</strong> Utilizar mensageria (ex: Apache Kafka ou RabbitMQ) para sincronização instantânea de dados.",
+                    "<strong>Single Source of Truth (SSOT):</strong> Implementar Master Data Management (MDM) garantindo dados unificados em todo o ecossistema corporativo.",
+                    "<strong>Analytics Preditivo:</strong> Aplicar modelos de Machine Learning sobre a base de CRM/ERP para prever Churn e demanda de estoque."
+                ]
+            },
+            p3: {
+                title: "IA Generativa & Automação",
+                icon: "fa-robot",
+                color: "purple",
+                low: [
+                    "<strong>Política de Uso Seguro de IA:</strong> Publicar diretrizes de aceitação do uso de ferramentas de IA (ex: ChatGPT) proibindo o envio de dados confidenciais.",
+                    "<strong>Licenciamento Corporativo:</strong> Migrar de contas pessoais de colaboradores para planos de IA Enterprise com proteção de privacidade de dados.",
+                    "<strong>Automações Iniciais No-Code:</strong> Implementar automações simples via Make ou Zapier para notificação de novos leads e chamados."
+                ],
+                medium: [
+                    "<strong>Capacitação em Prompt Engineering:</strong> Treinar times estratégicos em técnicas avançadas de criação de prompts e revisão de saídas de IA.",
+                    "<strong>Integração de Agentes No-Code/Low-Code:</strong> Conectar workflows no N8N/Power Automate diretamente no CRM e e-mail marketing.",
+                    "<strong>Base de Conhecimento Interna (RAG):</strong> Criar um assistente virtual baseado em documentos internos (PDFs, Manuais) usando arquitetura RAG."
+                ],
+                high: [
+                    "<strong>Agentes Autônomos de Negócio:</strong> Desenvolver ecossistemas de agentes de IA capazes de executar tarefas complexas de ponta a ponta.",
+                    "<strong>Finetuning & Modelos Proprietários:</strong> Ajustar LLMs com dados históricos da empresa para tarefas de atendimento e análise preditiva avançada.",
+                    "<strong>Orquestração No-Code Enterprise:</strong> Centralizar o gerenciamento de automações com governança de logs, falhas e re-tentativas."
+                ]
+            },
+            p4: {
+                title: "Governança & Segurança",
+                icon: "fa-shield-halved",
+                color: "amber",
+                low: [
+                    "<strong>MFA Obrigatório:</strong> Forçar a ativação de Autenticação em Dois Fatores (MFA) em todas as contas de e-mail e sistemas de gestão.",
+                    "<strong>Inventário de Dados e LGPD:</strong> Mapear onde estão armazenados dados pessoais de clientes e colaboradores (ROPA).",
+                    "<strong>Gerenciador de Senhas Corporativo:</strong> Eliminar o compartilhamento de senhas em planilhas adotando soluções como 1Password ou Bitwarden."
+                ],
+                medium: [
+                    "<strong>Gestão de Acessos RBAC:</strong> Restringir permissões de acesso com base em papéis formais e revogar acessos no desligamento.",
+                    "<strong>Conscientização em Phishing:</strong> Realizar treinamentos regulares de segurança da informação e testes simulados de engenharia social.",
+                    "<strong>Nomeação de DPO / Encarregado:</strong> Definir o responsável pela proteção de dados e publicar a política de privacidade atualizada."
+                ],
+                high: [
+                    "<strong>Arquitetura Zero-Trust & SSO:</strong> Implementar Single Sign-On centralizado (Okta/Entra ID) com verificação de postura de dispositivo.",
+                    "<strong>SOC & Resposta a Incidentes:</strong> Contratar monitoramento contínuo de segurança 24/7 (SIEM/SOC) e realizar PenTests periódicos.",
+                    "<strong>Governança Éti-ca de IA:</strong> Estabelecer Comitê de Ética e Segurança para auditar viés e vazamento de dados em algoritmos de IA."
+                ]
+            }
+        };
+
+        // Função para carregar dados de teste (Caso Exemplo / Demo)
+        function loadDemoData() {
+            document.getElementById('companyName').value = "Nexus Inovação Industrial S.A.";
+            document.getElementById('companySector').value = "Indústria e Manufatura";
+            document.getElementById('companySize').value = "Média (100 a 499 func.)";
+
+            // Seleciona opções mistas para simular uma empresa em transição
+            setRadio('p1_q1', '66');
+            setRadio('p1_q2', '33');
+            setRadio('p2_q1', '66');
+            setRadio('p2_q2', '33');
+            setRadio('p3_q1', '33');
+            setRadio('p3_q2', '33');
+            setRadio('p4_q1', '66');
+            setRadio('p4_q2', '33');
+
+            calculateDiagnostic();
+        }
+
+        function setRadio(name, value) {
+            const radios = document.getElementsByName(name);
+            for (let r of radios) {
+                if (r.value === value) r.checked = true;
+            }
+        }
+
+        function resetForm() {
+            document.getElementById('diagnosticForm').reset();
+            document.getElementById('resultsDashboard').classList.add('hidden');
+            document.getElementById('diagnosticForm').classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Função Principal de Cálculo e Geração do Laudo
+        function calculateDiagnostic() {
+            const form = document.getElementById('diagnosticForm');
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+
+            const companyName = document.getElementById('companyName').value;
+            const companySector = document.getElementById('companySector').value;
+            const companySize = document.getElementById('companySize').value;
+
+            // Função para pegar valor de radio
+            const getVal = (name) => {
+                const checked = document.querySelector(`input[name="${name}"]:checked`);
+                return checked ? parseFloat(checked.value) : 0;
+            };
+
+            // Cálculo da nota média por pilar (0 a 100)
+            const p1Score = Math.round((getVal('p1_q1') + getVal('p1_q2')) / 2);
+            const p2Score = Math.round((getVal('p2_q1') + getVal('p2_q2')) / 2);
+            const p3Score = Math.round((getVal('p3_q1') + getVal('p3_q2')) / 2);
+            const p4Score = Math.round((getVal('p4_q1') + getVal('p4_q2')) / 2);
+
+            const overallScore = Math.round((p1Score + p2Score + p3Score + p4Score) / 4);
+
+            // Exibir Metadados
+            document.getElementById('resCompanyName').innerText = companyName;
+            document.getElementById('resCompanySector').innerText = companySector;
+            document.getElementById('resCompanySize').innerText = companySize;
+            document.getElementById('resDate').innerText = new Date().toLocaleDateString('pt-BR');
+
+            // Atualizar Pontuações Globais
+            document.getElementById('overallScoreText').innerText = `${overallScore}%`;
+            document.getElementById('overallScoreBar').style.width = `${overallScore}%`;
+
+            document.getElementById('p1Score').innerText = `${p1Score}%`;
+            document.getElementById('p1Bar').style.width = `${p1Score}%`;
+
+            document.getElementById('p2Score').innerText = `${p2Score}%`;
+            document.getElementById('p2Bar').style.width = `${p2Score}%`;
+
+            document.getElementById('p3Score').innerText = `${p3Score}%`;
+            document.getElementById('p3Bar').style.width = `${p3Score}%`;
+
+            document.getElementById('p4Score').innerText = `${p4Score}%`;
+            document.getElementById('p4Bar').style.width = `${p4Score}%`;
+
+            // Definir Badge e Classificação
+            const badgeElem = document.getElementById('maturityBadge');
+            const descElem = document.getElementById('maturityDescription');
+
+            if (overallScore <= 25) {
+                badgeElem.className = "px-4 py-2 rounded-full font-bold text-xs bg-rose-500/10 text-rose-400 border border-rose-500/30 flex items-center gap-2";
+                badgeElem.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> Estágio: Iniciante / Crítico`;
+                descElem.innerText = "Sua empresa apresenta vulnerabilidades estruturais e dependência severa de processos manuais ou planilhas. Há necessidade urgente de modernização da infraestrutura e governança.";
+            } else if (overallScore <= 50) {
+                badgeElem.className = "px-4 py-2 rounded-full font-bold text-xs bg-amber-500/10 text-amber-400 border border-amber-500/30 flex items-center gap-2";
+                badgeElem.innerHTML = `<i class="fa-solid fa-bolt"></i> Estágio: Em Transição`;
+                descElem.innerText = "Existem iniciativas digitais em andamento, mas que atuam de forma isolada. Falta integração sistemática entre sistemas, além de uma estratégia unificada de automação e segurança.";
+            } else if (overallScore <= 75) {
+                badgeElem.className = "px-4 py-2 rounded-full font-bold text-xs bg-blue-500/10 text-blue-400 border border-blue-500/30 flex items-center gap-2";
+                badgeElem.innerHTML = `<i class="fa-solid fa-chart-line"></i> Estágio: Conectada / Estruturada`;
+                descElem.innerText = "Boa maturidade digital. A infraestrutura de Nuvem e os sistemas legados já possuem boa sinergia. O foco agora deve ser escalabilidade, automações avançadas e uso intensivo de IA.";
+            } else {
+                badgeElem.className = "px-4 py-2 rounded-full font-bold text-xs bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 flex items-center gap-2";
+                badgeElem.innerHTML = `<i class="fa-solid fa-crown"></i> Estágio: Líder Digital`;
+                descElem.innerText = "A empresa utiliza a tecnologia como vantagem competitiva central. Processos automatizados, segurança rigorosa e forte cultura de inovação orientada a dados e IA.";
+            }
+
+            // Identificar Forte x Fraco
+            const pillars = [
+                { name: "Nuvem & Infraestrutura", score: p1Score, key: 'p1' },
+                { name: "Sistemas & Dados", score: p2Score, key: 'p2' },
+                { name: "IA Generativa & Automação", score: p3Score, key: 'p3' },
+                { name: "Governança & Segurança", score: p4Score, key: 'p4' }
+            ];
+
+            pillars.sort((a, b) => b.score - a.score);
+            document.getElementById('strongestPillar').innerText = `${pillars[0].name} (${pillars[0].score}%)`;
+            document.getElementById('weakestPillar').innerText = `${pillars[pillars.length - 1].name} (${pillars[pillars.length - 1].score}%)`;
+            document.getElementById('topPriority').innerText = `Otimização de ${pillars[pillars.length - 1].name}`;
+
+            // Renderizar Gráfico Radar
+            renderRadarChart(p1Score, p2Score, p3Score, p4Score);
+
+            // Gerar Recomendações Dinâmicas
+            generateRecommendations(p1Score, p2Score, p3Score, p4Score);
+
+            // Mostrar resultado e ocultar formulário
+            document.getElementById('diagnosticForm').classList.add('hidden');
+            document.getElementById('resultsDashboard').classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Renderização do Chart.js (Radar)
+        function renderRadarChart(p1, p2, p3, p4) {
+            const ctx = document.getElementById('radarChart').getContext('2d');
+
+            if (radarChartInstance) {
+                radarChartInstance.destroy();
+            }
+
+            radarChartInstance = new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: [
+                        'Nuvem & Infra',
+                        'Sistemas & Dados',
+                        'IA & Automação',
+                        'Governança & Segurança'
+                    ],
+                    datasets: [{
+                        label: 'Pontuação (%)',
+                        data: [p1, p2, p3, p4],
+                        backgroundColor: 'rgba(6, 182, 212, 0.25)',
+                        borderColor: '#06b6d4',
+                        borderWidth: 2,
+                        pointBackgroundColor: '#38bdf8',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: '#38bdf8'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    scales: {
+                        r: {
+                            angleLines: { color: 'rgba(255, 255, 255, 0.1)' },
+                            grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                            pointLabels: {
+                                color: '#94a3b8',
+                                font: { size: 11, weight: 'bold', family: 'Inter' }
+                            },
+                            ticks: {
+                                backdropColor: 'transparent',
+                                color: '#64748b',
+                                stepSize: 25,
+                                beginAtZero: true,
+                                max: 100
+                            },
+                            suggestedMin: 0,
+                            suggestedMax: 100
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false }
+                    }
+                }
+            });
+        }
+
+        // Gerador do Plano de Boas Práticas Personalizado
+        function generateRecommendations(p1, p2, p3, p4) {
+            const container = document.getElementById('recommendationsContainer');
+            container.innerHTML = '';
+
+            const pScores = [
+                { key: 'p1', score: p1 },
+                { key: 'p2', score: p2 },
+                { key: 'p3', score: p3 },
+                { key: 'p4', score: p4 }
+            ];
+
+            pScores.forEach(item => {
+                const db = recommendationsDB[item.key];
+                let list = [];
+                let levelBadge = "";
+
+                if (item.score <= 33) {
+                    list = db.low;
+                    levelBadge = `<span class="text-[10px] uppercase font-extrabold px-2 py-0.5 rounded bg-rose-500/10 text-rose-400 border border-rose-500/20">Ação Imediata</span>`;
+                } else if (item.score <= 66) {
+                    list = db.medium;
+                    levelBadge = `<span class="text-[10px] uppercase font-extrabold px-2 py-0.5 rounded bg-amber-500/10 text-amber-400 border border-amber-500/20">Médio Prazo</span>`;
+                } else {
+                    list = db.high;
+                    levelBadge = `<span class="text-[10px] uppercase font-extrabold px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Excelência</span>`;
+                }
+
+                const cardHtml = `
+                    <div class="bg-slate-800/40 border border-slate-800 rounded-xl p-5 flex flex-col justify-between space-y-4">
+                        <div>
+                            <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-3">
+                                <div class="flex items-center space-x-2">
+                                    <i class="fa-solid ${db.icon} text-${db.color}-400"></i>
+                                    <h4 class="text-sm font-bold text-white">${db.title}</h4>
+                                </div>
+                                ${levelBadge}
+                            </div>
+                            <ul class="space-y-2.5 text-xs text-slate-300">
+                                ${list.map(rec => `
+                                    <li class="flex items-start space-x-2">
+                                        <i class="fa-solid fa-chevron-right text-cyan-400 text-[10px] mt-1 shrink-0"></i>
+                                        <span>${rec}</span>
+                                    </li>
+                                `).join('')}
+                            </ul>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += cardHtml;
+            });
+        }
+    </script>
+</body>
+</html>
